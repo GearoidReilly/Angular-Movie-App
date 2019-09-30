@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MovieService } from './services/movie.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,22 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'movie-app';
+  //title = 'movie-app';
+  MyMovies: any = [];
+  constructor(private movieService:MovieService){
+    //Makes an asynchronous call
+    this.movieService.GetMovieInformation().subscribe((data) => {
+      //Return data from the web service
+      this.MyMovies = data.Search;
+      console.log(this.MyMovies);
+    });
+  }
+
+  /*ngOnInit(){
+    //Makes an asynchronous call
+    this.movieService.GetMovieInformation().subscribe((data) => {
+      //Return data from the web service
+      this.MyMovies = data.Search;
+    });
+  }*/
 }

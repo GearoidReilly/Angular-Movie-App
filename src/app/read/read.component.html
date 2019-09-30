@@ -1,0 +1,18 @@
+<mat-accordion *ngFor="let movie of myMovies">
+    <mat-expansion-panel [expanded]="true" >
+    <mat-expansion-panel-header>
+    <mat-panel-title>
+    <h3> {{ movie.Title }} </h3>
+    </mat-panel-title>
+    <mat-panel-description>
+    <h3>{{ movie.Year }}</h3>
+    </mat-panel-description>
+    </mat-expansion-panel-header>
+    <img src="{{movie.Poster}}">
+    <mat-action-row>
+    <button mat-button color="primary">EDIT</button>
+    <button mat-button color="warn">DELETE</button>
+    </mat-action-row>
+    </mat-expansion-panel>
+</mat-accordion>
+    
