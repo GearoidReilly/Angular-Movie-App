@@ -8,17 +8,18 @@ import { MovieService } from '../services/movie.service';
 })
 export class ReadComponent implements OnInit {
 
-  MyMovies: any = [];
+  myMovies: any = [];
   constructor(private movieService:MovieService) { 
-    //Makes an asynchronous call
-    this.movieService.GetMovieInformation().subscribe((data) => {
-      //Return data from the web service
-      this.MyMovies = data.Search;
-      console.log(this.MyMovies);
-    });
+    
   }
 
   ngOnInit() {
+    //Makes an asynchronous call
+    this.movieService.GetMovieInformation().subscribe((data) => {
+      //Return data from the web service
+      this.myMovies = data.Search;
+      console.log(this.myMovies);
+    });
   }
 
 }
