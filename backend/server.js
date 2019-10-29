@@ -7,6 +7,25 @@ const path = require('path')
 const bodyParser = require('body-parser')
 //Needed for Cross Origin Resource Sharing(CORS)
 const cors = require('cors');
+//Needed to connect to the mongo db
+const mongoose = require('mongoose');
+
+//Connection string to mongodb
+var mongoDB = 'mongodb+srv://Admin:12345@cluster0-tdowq.mongodb.net/test?retryWrites=true&w=majority';
+//Connect to database
+mongoose.connect(mongoDB, {useNewUrlParser:true});
+
+//Get reference to schema
+const Schema = mongoose.Schema;
+//Create new schema for movies
+const movieSchema = new Schema({
+    title:String,
+    year:String,
+    poster:String
+})
+
+//Create model for the database
+const MovieModel = mongoose.model("MovieInfo", movieSchema);
 
 app.use(cors());
 
@@ -27,8 +46,8 @@ app.get('/hello/:name', (req, res) => {
     res.send("Hello " + req.params.name)
 })
 
-app.get('/api/movies', (req, res) => {
-    const movies = [
+app.get('/api/movies', (req, res, next) => {
+    const movies = /*[
         {
             "Title":"Avengers: Infinity War",
             "Year":"2018",
@@ -56,14 +75,25 @@ app.get('/api/movies', (req, res) => {
             "Type":"movie",
             "Poster":"https://m.media-amazon.com/images/M/MV5BNDUyODAzNDI1Nl5BMl5BanBnXkFtZTcwMDA2NDAzMw@@._V1_SX300.jpg"
             }
-        ]
-                        
+        ]*/
+        //Used to retrieve data from the movie model
+    MovieModel.find((err,data) => {
+        res.json({movies:data});
+    })             
 
-    res.status(200).json({
+    /*res.status(200).json({
         message: "Json retrieved successfully",
         myMovies:movies
-    })
+    })*/
     //res.send("my api")
+})
+
+//Used to get a movie by id
+app.get('/api/movies/:id', (req, res, next) => {
+    console.log(req.params.id);
+    MovieModel.findById(req.params.id, function (err, data) {
+        res.json(data);
+    });
 })
 
 app.use(bodyParser.urlencoded({extended: false}));
@@ -94,6 +124,14 @@ app.post('/api/movies', (req,res) =>{
     console.log(req.body.title);
     console.log(req.body.year);
     console.log(req.body.poster);
+
+    //Create a movie using the information entered to the database
+    MovieModel.create({
+        title: req.body.title,
+        year: req.body.year,
+        poster: req.body.poster
+    });
+    res.json("Data uploaded")
 })
     
 

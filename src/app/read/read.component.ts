@@ -17,8 +17,8 @@ export class ReadComponent implements OnInit {
     //Makes an asynchronous call
     this.movieService.GetMovieInformation().subscribe((data) => {
       //Return data from the web service
-      this.myMovies = data.myMovies;
-      //console.log(this.myMovies);
+      this.myMovies = data.movies;
+      console.log(this.myMovies);
     });
   }
 
