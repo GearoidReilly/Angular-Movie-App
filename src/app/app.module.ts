@@ -19,13 +19,15 @@ import { CreateComponent } from './create/create.component';
 import { DeleteComponent } from './delete/delete.component';
 
 import {FormsModule} from '@angular/forms';
+import { EditComponent } from './edit/edit.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CreateComponent,
     DeleteComponent,
-    ReadComponent
+    ReadComponent,
+    EditComponent
   ],
   imports: [
     BrowserModule,

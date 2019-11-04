@@ -22,4 +22,14 @@ export class ReadComponent implements OnInit {
     });
   }
 
+  onDelete(id:string){
+    //Log the movie id
+    console.log("Deleting movie: " + id);
+
+    //Subscribe to the service function
+    this.movieService.DeleteMovie(id).subscribe();
+    //Add functionality to refresh the page automatically
+    window.location.reload();
+  }
+
 }

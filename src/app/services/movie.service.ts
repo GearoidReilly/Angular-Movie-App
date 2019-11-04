@@ -23,4 +23,9 @@ export class MovieService {
     //Send the movie data to the server
     return this.http.post("http://localhost:3000/api/movies",movie);
   }
+
+  DeleteMovie(id:string):Observable<any>{
+    //Return a server request while adding the id to the server request
+    return this.http.delete("http://localhost:3000/api/movies/" + id);
+  }
 }
