@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MovieService } from '../services/movie.service';
+import { Router, ActivatedRoute } from '@angular/router';
+
 
 @Component({
   selector: 'app-read',
@@ -27,9 +29,13 @@ export class ReadComponent implements OnInit {
     console.log("Deleting movie: " + id);
 
     //Subscribe to the service function
-    this.movieService.DeleteMovie(id).subscribe();
-    //Add functionality to refresh the page automatically
-    window.location.reload();
+    this.movieService.DeleteMovie(id).subscribe(
+      //Adds asynchronous functionality
+      () =>{
+        //Add functionality to refresh the page automatically
+        this.ngOnInit();
+      }
+    );
   }
 
 }

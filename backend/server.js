@@ -46,6 +46,7 @@ app.get('/hello/:name', (req, res) => {
     res.send("Hello " + req.params.name)
 })
 
+//Used to get the list of movies in the database
 app.get('/api/movies', (req, res, next) => {
     const movies = 
         //Used to retrieve data from the movie model
@@ -54,6 +55,7 @@ app.get('/api/movies', (req, res, next) => {
     })             
 })
 
+//Used for deleting a movie from the database
 app.delete('/api/movies/:id', (req,res) =>{
     console.log(req.params.id);
 
@@ -70,7 +72,9 @@ app.delete('/api/movies/:id', (req,res) =>{
 //Used to get a movie by id
 app.get('/api/movies/:id', (req, res, next) => {
     console.log(req.params.id);
+    //Find a movie in the database by id
     MovieModel.findById(req.params.id, function (err, data) {
+        //Return the data as json
         res.json(data);
     });
 })
@@ -78,25 +82,7 @@ app.get('/api/movies/:id', (req, res, next) => {
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
-app.get('/test', (req, res) => {
-    //Used to load a file through the server
-    res.sendFile(path.join(__dirname + '/index.html'))
-})
-
-app.get('/name', (req, res) => {
-    console.log('route calling');
-
-    res.send("Hello " + req.query.firstname + " " + req.query.lastname)
-})
-
-app.post('/name', (req, res) => {
-    console.log('post calling');
-    console.log(req.body.firstname + " " + req.body.lastname);
-
-    res.send("Hello from post: " + req.body.firstname + " " + req.body.lastname)
-
-})
-
+//Used to send a movie to the database
 app.post('/api/movies', (req,res) =>{
     console.log('post Sucessfull');
     console.log(req.body)
@@ -112,6 +98,24 @@ app.post('/api/movies', (req,res) =>{
     });
     res.json("Data uploaded")
 })
+
+//Used to update a movie in the database
+app.put('/api/movies/:id', function (req, res) {
+    //Display the id of the movie being edited
+    console.log("Update Movie " + req.params.id);
+    //List details
+    console.log(req.body);
+    console.log(req.body.title);
+    console.log(req.body.year);
+    console.log(req.body.poster);
+
+    //Find the movie in the database and update the information
+    MovieModel.findByIdAndUpdate(req.params.id, req.body, {new: true},
+    function(err, data){
+        res.send(data);
+    })
+})
+
     
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))

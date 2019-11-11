@@ -28,4 +28,18 @@ export class MovieService {
     //Return a server request while adding the id to the server request
     return this.http.delete("http://localhost:3000/api/movies/" + id);
   }
+
+  getMovie(id: string): Observable<any> {
+    //Return a server request to get a movie by id
+    return this.http.get("http://localhost:3000/api/movies/" + id);
+    }
+
+  updateMovie(id: string, title: string, year: string, poster: string): Observable<any> {
+    //Create a movie constant with the input title, year and poster
+    const movie: Movie = { title: title, year: year, poster: poster };
+
+    //Update the movie in the server with the id
+    return this.http.put("http://localhost:3000/api/movies/" + id, movie);
+  }
+    
 }
